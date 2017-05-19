@@ -76,19 +76,27 @@ Public Class dlgClimSoft
 
     Private Sub SetDefaults()
         clsRImportFromClimsoft = New RFunction
-
-        ucrSelectorForClimSoft.Reset()
+        clsRDatabaseConnect = New RFunction
+        clsHasConnection = New RFunction
+        clsRDatabaseDisconnect = New RFunction
         ucrReceiverMultipleStations.SetMeAsReceiver()
         ucrInputStartDate.SetName("")
         ucrInputEndDate.SetName("")
 
         clsRDatabaseConnect.SetRCommand(frmMain.clsRLink.strInstatDataObject & "$database_connect")
+        clsRDatabaseConnect.AddParameter("dbname", "")
+        clsRDatabaseConnect.AddParameter("host", "")
+        clsRDatabaseConnect.AddParameter("user", "")
+        clsRDatabaseConnect.AddParameter("port", "")
+
         clsRDatabaseDisconnect.SetRCommand(frmMain.clsRLink.strInstatDataObject & "$database_disconnect")
         clsRImportFromClimsoft.SetRCommand(frmMain.clsRLink.strInstatDataObject & "$import_from_climsoft")
         clsHasConnection.SetRCommand(frmMain.clsRLink.strInstatDataObject & "$has_database_connection")
         ucrBase.clsRsyntax.AddParameter("include_observation_data", "FALSE")
         ucrBase.clsRsyntax.SetBaseRFunction(clsRImportFromClimsoft)
 
+        frmMain.clsRLink.RunScript(clsRDatabaseDisconnect.ToScript(), strComment:="Disconnect database connection.")
+        ucrSelectorForClimSoft.Reset()
         bResetSubdialog = True
     End Sub
 

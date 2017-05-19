@@ -40,12 +40,6 @@ Public Class sdgImportFromClimSoft
         ucrInputPort.AddQuotesIfUnrecognised = False
         ucrInputUserName.SetParameter(New RParameter("user", 3))
 
-        'to be deleted once the dialog is ready
-        ucrInputDatabaseName.SetRDefault("mariadb_climsoft_test_db_v4")
-        ucrInputHost.SetRDefault("127.0.0.1")
-        'ucrInputPort.SetRDefault("3308")
-        ucrInputUserName.SetRDefault("root")
-
         bControlsInitialised = True
     End Sub
 
@@ -60,7 +54,7 @@ Public Class sdgImportFromClimSoft
         If Not bControlsInitialised Then
             InitialiseControls()
         End If
-        SetRCode(Me, clsRDatabaseConnect, bResetSubdialog)
+        SetRCode(Me, clsRDatabaseConnect, False)
     End Sub
 
     Private Sub cmdEnterPassword_Click(sender As Object, e As EventArgs) Handles cmdEnterPassword.Click
@@ -80,7 +74,7 @@ Public Class sdgImportFromClimSoft
         End If
         If bConnected Then
             lblConnection.Text = strConnected
-            cmdEnterPassword.Text = "Diconnnect"
+            cmdEnterPassword.Text = "Disconnnect"
         Else
             lblConnection.Text = strNoConnection
             cmdEnterPassword.Text = "Enter Password"
